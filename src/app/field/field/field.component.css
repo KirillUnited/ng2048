@@ -1,0 +1,12 @@
+.wrapper {
+    display: inline-block;
+}
+.row {
+    display: flex;
+    border: 1px solid #454545;
+}
+.tile {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #333333;
+}

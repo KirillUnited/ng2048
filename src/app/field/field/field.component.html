@@ -1,0 +1,8 @@
+<div class="wrapper">
+  <div class="row" *ngFor="let row of state$ | async">
+    <div class="tile" *ngFor="let tile of row">{{ tile }}</div>
+  </div>
+  <div>
+    <button (click)="createRandom()">start</button>
+  </div>
+</div>
