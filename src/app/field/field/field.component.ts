@@ -7,7 +7,7 @@ export type Direction = 'top' | 'right' | 'bottom' | 'left';
 @Component({
   selector: 'app-field',
   templateUrl: './field.component.html',
-  styleUrls: ['./field.component.css'],
+  styleUrls: ['./field.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -32,7 +32,7 @@ export class FieldComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.state$.value);
-
+    this.createRandom();
   }
   createRandom() {
     let field = this.state$.value;
@@ -59,7 +59,7 @@ export class FieldComponent implements OnInit {
       for (let tileIndex = 0; tileIndex < this.size; tileIndex++) {
         const tileValue = field[rowIndex][tileIndex];
         if (tileValue !== null) {
-          for (let searchIndex = rowIndex; searchIndex >0; searchIndex--) {
+          for (let searchIndex = rowIndex; searchIndex > 0; searchIndex--) {
             if (!this.mergeTiles(field, searchIndex, tileIndex, 'top')) {
               break;
             }
