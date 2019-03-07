@@ -1,5 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewChecked } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 
 export type FieldState = number[][];
 export type Direction = 'top' | 'right' | 'bottom' | 'left';
@@ -8,10 +9,21 @@ export type Direction = 'top' | 'right' | 'bottom' | 'left';
   selector: 'app-field',
   templateUrl: './field.component.html',
   styleUrls: ['./field.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  animations: [
+    trigger('tileState', [
+      state('base', style({})),
+      state('updated', style({})),
+      transition('* => updated', [
+        animate(300, keyframes([
+          style({ opacity: 1, transform: 'scale(1)', offset: 0 }),
+          style({ opacity: 1, transform: 'scale(1.1)', offset: 0.3 }),
+          style({ opacity: 1, transform: 'scale(1)', offset: 1.0 })]))
+      ])
+    ])
+  ]
 })
 
-export class FieldComponent implements OnInit {
+export class FieldComponent implements OnInit, AfterViewChecked {
   @HostListener('document:keydown.ArrowUp', ['$event.target']) arrowUp() {
     this.moveUp();
   }
@@ -27,6 +39,8 @@ export class FieldComponent implements OnInit {
   private size = 4;
   private baseValue = 2;
   private state$ = new BehaviorSubject<FieldState>(new Array(this.size).fill(null).map(_ => new Array(this.size).fill(null)));
+  tileState = 'base';
+  hiddenOverlay = true;
 
   constructor() { }
 
@@ -34,6 +48,12 @@ export class FieldComponent implements OnInit {
     console.log(this.state$.value);
     this.createRandom();
   }
+
+  ngAfterViewChecked() {
+    console.log('viewChecked');
+
+  }
+
   createRandom() {
     let field = this.state$.value;
     let empties = [];
@@ -46,12 +66,16 @@ export class FieldComponent implements OnInit {
     });
     console.log(empties);
     if (empties.length === 0) {
-      alert('Game Over!')
+      alert('Game Over!');
       //throw new Error('Empty empties');
+      // this.hiddenOverlay = !this.hiddenOverlay;
+      return false;
     }
     let coords = empties[Math.floor(Math.random() * empties.length)];
     field[coords[0]][coords[1]] = this.baseValue;
     this.state$.next(field);
+
+    this.tileState = 'updated';
   }
   moveUp() {
     let field = this.state$.value;

@@ -23,7 +23,7 @@
   font-weight: bold;
   margin: 5px;
 
-  $tile-nums: (1: 2, 2: 4, 3: 8, 4: 16, 5: 32, 6: 64, 7: 128, 8: 256);
+  $tile-nums: (1: 2, 2: 4, 3: 8, 4: 16, 5: 32, 6: 64, 7: 128, 8: 256, 9: 512, 10: 1024, 11: 2048, 12: 4096);
 
   @each $index,
   $num in $tile-nums {
@@ -37,4 +37,52 @@
 
 .controls {
   margin-top: 20px;
+}
+
+.info {
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.copyright {
+  color: darkkhaki;
+}
+
+.overlay {
+  // display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(238, 228, 218, 0.73);
+  z-index: 100;
+  padding-top: 40px;
+  text-align: center;
+  -webkit-animation: fade-in 800ms ease 1200ms;
+  -moz-animation: fade-in 800ms ease 1200ms;
+  animation: fade-in 800ms ease 1200ms;
+  -webkit-animation-fill-mode: both;
+  -moz-animation-fill-mode: both;
+  animation-fill-mode: both;
+
+  .msg {
+    color: #776e65;
+    font-size: 60px;
+    font-weight: bold;
+    height: 60px;
+    line-height: 60px;
+    margin-top: 222px;
+    text-transform: uppercase;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }

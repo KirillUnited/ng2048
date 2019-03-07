@@ -1,14 +1,26 @@
 <div class="wrapper">
   <div class="container">
     <div class="row" *ngFor="let row of state$ | async">
-      <div class="tile" *ngFor="let tile of row" [ngClass]="'color-' + tile">{{ tile }}</div>
+      <div class="tile" *ngFor="let tile of row" [ngClass]="'color-' + tile" [@tileState]="tileState">{{ tile }}</div>
     </div>
   </div>
-  <div class="controls">
+  <!-- <div class="controls">
     <button (click)="createRandom()">start</button>
     <button (click)="moveLeft()">&#8592;</button>
     <button (click)="moveRight()">&#8594;</button>
     <button (click)="moveUp()">&#8593;</button>
     <button (click)="moveDown()">&#8595;</button>
+  </div> -->
+  <div class="info">
+    <p class="note">
+      <!-- <b>HOW TO PLAY:</b> Use your arrow keys to move the tiles. When two tiles with the same number touch, they merge into
+      one! -->
+      <b>КАК ИГРАТЬ:</b> Используйте клавиши со стрелками для перемещения плиток. Когда две плитки с одинаковым номером
+      соприкасаются, они объединяются в одну!
+    </p>
+    <p class="copyright">2048 Game by Angular</p>
+  </div>
+  <div class="overlay" [hidden]="hiddenOverlay">
+    <p class="msg">game over</p>
   </div>
 </div>
